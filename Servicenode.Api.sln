@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servicenode.Api", "Servicenode.Api.csproj", "{3D0924C4-6700-4EF7-99F6-897C439F3823}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servicenode.Api", "Servicenode.Api/Servicenode.Api.csproj", "{3D0924C4-6700-4EF7-99F6-897C439F3823}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
