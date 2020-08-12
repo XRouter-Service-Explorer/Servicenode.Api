@@ -34,11 +34,9 @@ jobs:
       - name: Find and Replace deployment manifest
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: "PLACEHOLDER_IMAGE_LOCATION"
+          find: PLACEHOLDER_IMAGE_LOCATION
           replace:  xrouterserviceexplorer/servicenode.api:${{ github.sha }}
-          include: "./Servicenode.Api/deployment.yml" 
         
-
       - name: Deploy Docker Image
         uses: Jberlinsky/kubernetes-action@master
         env:
