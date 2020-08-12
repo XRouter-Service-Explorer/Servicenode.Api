@@ -283,7 +283,7 @@ namespace Servicenode.Api.Controllers
             }
             else
             {
-                xcloudConfig += ("clientrequestlimit=" + int.Parse(mainClientRequestLimit) + "\n");
+                xcloudConfig += ("clientrequestlimit=" + serviceConfig.RequestLimit + "\n");
             }
 
             string help = string.Empty;
