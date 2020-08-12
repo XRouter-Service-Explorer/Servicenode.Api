@@ -21,7 +21,6 @@ jobs:
         with:
           find: PLACEHOLDER_IMAGE_LOCATION
           replace:  xrouterserviceexplorer/servicenode.api:${{ github.sha }}
-          include: "./Servicenode.Api/deployment.yml" 
           
         
       - run: echo ${{ steps.replace.outputs.modifiedFiles }}
