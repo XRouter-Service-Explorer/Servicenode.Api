@@ -16,13 +16,15 @@ jobs:
       - uses: actions/checkout@v2
           
       - name: Find and Replace deployment manifest
+        id: replace
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: "PLACEHOLDER_IMAGE_LOCATION"
+          find: PLACEHOLDER_IMAGE_LOCATION
           replace:  xrouterserviceexplorer/servicenode.api:${{ github.sha }}
           include: "./Servicenode.Api/deployment.yml" 
           
         
+      - run: echo ${{ steps.replace.outputs }}
       - run: echo xrouterserviceexplorer/servicenode.api:${{ github.sha }}
       - run: cat ./Servicenode.Api/deployment.yml
         
