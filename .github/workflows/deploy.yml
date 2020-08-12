@@ -21,6 +21,24 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+            
+      - name: Find and Replace deployment rpc username
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: BLOCKNET_DAEMON_RPCUSERNAME
+          replace: ${{ secrets.BLOCKNET_DAEMON_RPCUSERNAME }}
+          
+      - name: Find and Replace deployment rpc password
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: BLOCKNET_DAEMON_RPCPASSWORD
+          replace: ${{ secrets.BLOCKNET_DAEMON_RPCPASSWORD }}
+         
+      - name: Find and Replace deployment rpc url
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: BLOCKNET_DAEMON_URL
+          replace: ${{ secrets.BLOCKNET_DAEMON_URL }}
           
       - name: Build and Publish Docker image
         uses: docker/build-push-action@v1.1.0
@@ -36,24 +54,6 @@ jobs:
         with:
           find: PLACEHOLDER_IMAGE_LOCATION
           replace:  xrouterserviceexplorer/servicenode.api:${{ github.sha }}
-          
-      - name: Find and Replace deployment rpc username
-        uses: jacobtomlinson/gha-find-replace@master
-        with:
-          find: BLOCKNET_DAEMON_RPCUSERNAME
-          replace: ${{ secrets.BLOCKNET_DAEMON_RPCUSERNAME }}
-          
-      - name: Find and Replace deployment rpc username
-        uses: jacobtomlinson/gha-find-replace@master
-        with:
-          find: BLOCKNET_DAEMON_RPCPASSWORD
-          replace: ${{ secrets.BLOCKNET_DAEMON_RPCPASSWORD }}
-         
-      - name: Find and Replace deployment rpc url
-        uses: jacobtomlinson/gha-find-replace@master
-        with:
-          find: BLOCKNET_DAEMON_URL
-          replace: ${{ secrets.BLOCKNET_DAEMON_URL }}
         
       - name: Deploy Docker Image
         uses: Jberlinsky/kubernetes-action@master
