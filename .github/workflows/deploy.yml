@@ -24,7 +24,7 @@ jobs:
           include: "./Servicenode.Api/deployment.yml" 
           
         
-      - run: echo ${{ steps.replace.outputs }}
+      - run: echo ${{ steps.replace.outputs.modifiedFiles }}
       - run: echo xrouterserviceexplorer/servicenode.api:${{ github.sha }}
       - run: cat ./Servicenode.Api/deployment.yml
         
