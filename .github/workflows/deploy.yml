@@ -24,4 +24,5 @@ jobs:
           
         
       - run: echo xrouterserviceexplorer/servicenode.api:${{ github.sha }}
+      - run: cat ./Servicenode.Api/deployment.yml
         
