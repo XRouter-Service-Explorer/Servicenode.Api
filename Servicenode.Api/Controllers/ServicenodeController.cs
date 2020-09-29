@@ -53,7 +53,6 @@ namespace Servicenode.Api.Controllers
             connectReply = connectReply.Where(c => c.NodePubKey != string.Empty).ToList();
             var nodes = connectReply.Select(cr =>
             {
-                var serviceNodeConfig = configReply.Find(c => c.NodePubKey == cr.NodePubKey);
                 var cfg = configReply.Find(c => c.NodePubKey == cr.NodePubKey);
 
                 var cfgElements = new List<string[]>();
@@ -64,14 +63,21 @@ namespace Servicenode.Api.Controllers
                 }
 
                 string port = null;
+                string host = null;
                 if (cfgElements.Any(lc => lc[0] == "port"))
                 {
                     port = cfgElements.FirstOrDefault(e => e[0] == "port")[1];
                 }
 
+                if (cfgElements.Any(lc => lc[0] == "host"))
+                {
+                    host = cfgElements.FirstOrDefault(e => e[0] == "host")[1];
+                }
+
                 return new NodeInfoViewModel
                 {
                     Type = (port == "41412" || string.IsNullOrEmpty(port)) ? "Regular" : "Enterprise",
+                    Host = host,
                     Banned = cr.Banned,
                     NodePubKey = cr.NodePubKey,
                     PaymentAddress = cr.PaymentAddress,
@@ -249,12 +255,18 @@ namespace Servicenode.Api.Controllers
             {
                 if (serviceConfig.Fee != double.Parse(mainFee))
                 {
-                    xcloudConfig += ("fee=" + serviceConfig.Fee.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." }) + "\n");
+                    if (serviceConfig.Fee % 1 == 0)
+                        xcloudConfig += ("fee=" + serviceConfig.Fee + "\n");
+                    else
+                        xcloudConfig += ("fee=" + serviceConfig.Fee.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." }) + "\n");
                 }
             }
             else
             {
-                xcloudConfig += ("fee=" + serviceConfig.Fee.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." } + "\n"));
+                if (serviceConfig.Fee % 1 == 0)
+                    xcloudConfig += ("fee=" + serviceConfig.Fee + "\n");
+                else
+                    xcloudConfig += ("fee=" + serviceConfig.Fee.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." } + "\n"));
             }
 
             if (serviceConfig.Disabled)
