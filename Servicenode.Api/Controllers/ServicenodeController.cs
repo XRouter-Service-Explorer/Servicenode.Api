@@ -449,12 +449,32 @@ namespace Servicenode.Api.Controllers
 
             var query = xrouterEnabledServicenodes.Select(q =>
             {
+                string config = string.Empty;
+
+                var configReply = xrouterService.xrShowConfigs();
+
+                var serviceNodeConfig = configReply.Find(c => c.NodePubKey == q.ServiceNode.SNodeKey);
+
+                if (serviceNodeConfig != null)
+                    config = serviceNodeConfig.Config;
+
+                var serviceNodeConfigElements = config.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
+                            .Select(value => value.Split('='));
+
+                string serviceNodeHost = null;
+
+                if (serviceNodeConfigElements.Any(lc => lc[0] == "host"))
+                {
+                    serviceNodeHost = serviceNodeConfigElements.FirstOrDefault(e => e[0] == "host")[1];
+                }
+
                 return new Core.Models.ServiceNodeInfoResponse
                 {
                     Type = q.ServiceNode.Exr ? "Enterprise" : "Regular",
                     Address = q.ServiceNode.Address,
                     Score = q.ServiceNode.Score,
                     SNodeKey = q.ServiceNode.SNodeKey,
+                    Host = serviceNodeHost,
                     Status = q.ServiceNode.Status,
                     Tier = q.ServiceNode.Tier,
                     TimeLastSeen = q.ServiceNode.TimeLastSeen,
@@ -513,6 +533,7 @@ namespace Servicenode.Api.Controllers
                     TimeLastSeen = sn.TimeLastSeen,
                     TimeLastSeenStr = sn.TimeLastSeenStr,
                     Address = sn.Address,
+                    Host = sn.Host,
                     SNodeKey = sn.SNodeKey,
                     Status = sn.Status,
                     SpvWallets = sn.SpvWallets,

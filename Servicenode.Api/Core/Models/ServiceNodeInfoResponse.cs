@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Servicenode.Api.Core.Models
 {
@@ -11,6 +9,7 @@ namespace Servicenode.Api.Core.Models
         public string Tier { get; set; }
         public string Status { get; set; }
         public string Address { get; set; }
+        public string Host { get; set; }
         public int Score { get; set; }
         public string Type { get; set; }
         public DateTime TimeLastSeenStr { get; set; }
